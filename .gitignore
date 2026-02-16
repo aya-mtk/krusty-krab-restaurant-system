@@ -1,0 +1,15 @@
+# Composer
+vendor/
+composer.lock
+
+# Environment
+.env
+
+# OS
+.DS_Store
+
+# Logs
+*.log
+
+# IDE
+.vscode/

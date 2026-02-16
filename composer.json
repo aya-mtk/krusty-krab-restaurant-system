@@ -1,0 +1,19 @@
+{
+    "name": "ayamaatouk/backend",
+    "description": "Restaurant ordering system using PHP and MongoDB",
+    "type": "project",
+    "require": {
+        "mongodb/mongodb": "^2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ayamaatouk\\Backend\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Aya Maatouk",
+            "email": "ayouyamk@gmail.com"
+        }
+    ]
+}

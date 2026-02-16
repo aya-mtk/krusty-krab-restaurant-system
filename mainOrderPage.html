@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Order</title>
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="style(1).css">
+	<link rel="stylesheet" href="neon2.css">
+	<link rel="stylesheet" href="slideshow.css">
+	
+	<style>
+		
+		.od {
+			margin-top: 100px;
+			line-height: 70px;
+		}
+		
+		button {
+			width: 200px;
+			padding: 25px;
+			margin: 15px;
+			font-family: algerian;
+			background-color: black;
+			color: white;
+		}
+		
+		.myimage {
+			animation:float 3s linear infinite;
+			float:left;
+			margin-top: -50px;
+			mix-blend-mode: difference;
+		}
+		
+		.myimage:hover {
+			mix-blend-mode: color-dodge;
+		}
+		
+		
+		@keyframes float{
+		  0%, 100%{
+			transform: translateY(0rem);
+		  }
+		  50%{
+			transform: translateY(3rem);
+		  }
+		}
+		
+	</style>
+	
+</head>
+	
+<body >
+    
+<!-- header section starts  -->
+
+<header>
+	<div class="wrapper">
+	<h1><a href="#" class="logo"><img src="icons/krab1.jpg" style="width: 70px; height: 70px; vertical-align: middle; position: fixed; top: 0;" alt="">.......k. The Krusty Krab</a></h1>
+	</div>
+    <div id="menu-bar" class="fas fa-bars"></div>
+	
+    <nav class="navbar">
+        <a href="UserHome.php">home</a>
+        <a href="UserMenuPage.php">Menu</a>
+        <a href="About.html"  target="_blank">About</a>
+        <a href="ReservationPage.php">Reservation</a>
+        <a href="phpReview.php">Review</a>
+        <a href="#">order</a>
+    </nav>
+
+</header>
+
+<!-- header section ends -->
+
+<!-- home section starts  -->
+
+<section class="home" id="home">
+	 <div class="content od">
+<!--
+		 <div class="wrapper">
+		 	<h3>Welcome to Our Ordering Page:</h3>
+		</div>
+-->
+
+		 <div class="wrapper" style="width: 550px; float:right; font-size: 70px;padding-right:45px;">
+		 	<h3 style="font-size: 60px;">Welcome to The Krusty Krab Ordering Page</h3>
+		</div>
+ 
+		 <div class="myimage">
+		 	<img src="images/krabs-lies-money.png">
+		 </div>
+		 <br>
+		 <button class="neon-button" type="button" id="breakfast" onclick="breakfastorder()">Breakfast</button>
+		 
+		 <button class="neon-button" type="button" id="lunch" onclick="lunchorder()">Lunch/Dinner</button>
+		 
+		 <button class="neon-button" type="button" id="openingtime" onclick="openingtime()">Opening Hours</button>
+		 <p id="demo"></p>
+	</div>
+</section> 
+
+<!-- home section ends -->
+
+<!-- footer section  -->
+
+<section class="footer">
+
+    <div class="share">
+        <a href="#" class="btn">facebook</a>
+        <a href="#" class="btn">twitter</a>
+        <a href="#" class="btn">instagram</a>
+        <a href="#" class="btn">pinterest</a>
+        <a href="#" class="btn">linkedin</a>
+    </div>
+	
+</section>
+
+<!-- scroll top button  -->
+<a href="#home" class="fas fa-angle-up" id="scroll-top"></a>
+
+<!-- loader  --
+<div class="loader-container">
+    <img src="images/fishoader1.gif" alt="">
+</div>
+
+
+<!-- custom js file link  -->
+<script src="script.js"></script>
+<script src="js.js"></script>
+	
+<script>
+	var now = new Date();
+	var hours = now.getHours()
+	
+	function breakfastorder(){
+		if(hours>=8 && hours<12){
+			window.location.href="UserOrderBreakfast.php";
+		}
+		else
+			document.getElementById("demo").innerHTML = "It's not time for Breakfast!<br>Check our Opening Times!";
+	}
+	function lunchorder(){
+		if(hours>=12 && hours<=24){
+			window.location.href="UserOrder.php";
+		}
+		
+		else if(hours>=0 && hours<2){
+			window.location.href="UserOrder.php";
+		}
+		
+		else{
+			document.getElementById("demo").innerHTML = "It's not time for Lunch / Dinner!<br>Check our Opening Times!";
+		}
+	}
+	
+	function openingtime(){
+		document.getElementById("demo").innerHTML = "<strong style=\"color: #9DC209;\">Breakfast: </strong> 8:00 am <strong style=\"color: rgba(0,0,0,0.5);\">till</strong> 11:59 am<br><strong style=\"color: #ff6a56;\">Lunch / Dinner: </strong> 12:00 pm <strong style=\"color: rgba(0,0,0,0.5);\">till</strong> 1:59 am";
+	}
+</script>
+
+</body>
+</html>

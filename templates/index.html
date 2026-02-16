@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chatbot</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<style>
+		body {
+		  font-family: "Tempus Sans ITC";
+		  position: relative; /* add this to make sure the chat button is positioned relative to the body element */
+		  background-color: transparent;
+		}
+
+		.chat-container {
+		  position: fixed;
+		  bottom: 20px;
+		  right: 20px;
+		  height: 400px;
+		  width: 330px;
+		  background-color: rgba(0,0,0,0.7);
+/*		  background: rgba(0,0,0,0.8) url("{{ url_for('serve_image', filename='bg2.jpg') }}");*/
+		  background-size: cover;
+		  background-position: center;
+		  border-radius: 10px;
+		  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+		  overflow-y: scroll;
+		  padding: 30px 20px;
+		  padding-right: 70px;
+		}
+
+		/* add the following code to move the chat button to the bottom right corner */
+
+		.chat-button {
+		  position: absolute;
+		  border: none;
+		  border-radius: 50%;
+		  width: 60px;
+		  height: 60px;
+		  background-image: url("{{ url_for('serve_image', filename='kk.jpg') }}");
+		  background-size: cover;
+	      background-position: center;
+		  color: white;
+		  font-size: 14px;
+		  text-align: center;
+		  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+		  cursor: pointer;
+		  z-index: 999;
+		  right: 25px;
+		  top: 500px;
+		}
+
+		.chat {
+			display: flex;
+			flex-flow: row wrap;
+			align-items: flex-start;
+			margin-bottom: 10px;
+		}
+
+		.user-photo {
+			width: 60px;
+			height: 60px;
+    		background-image: url("{{ url_for('serve_image', filename='sp.png') }}");
+			background-size: cover;
+			border-radius: 50%;
+			margin-right: 10px;
+		}
+
+		.bot-photo {
+			width: 60px;
+			height: 60px;
+/*			background-image: url("chatbot.png");*/
+			background-image: url("{{ url_for('serve_image', filename='kr.webp') }}");
+/*			background-color: pink;*/
+			background-size: cover;
+			border-radius: 50%;
+			margin-left: 10px;
+		}
+
+		.chat-message {
+			width: 70%;
+			padding: 10px;
+			border-radius: 10px;
+			margin: 0;
+			font-size: 12px;
+		}
+
+		.user .chat-message {
+			background-color: rgba(255,255,255,0.6);
+			border: 1.5px solid black;
+			color: black;
+			order: -1;
+		}
+
+		.bot .chat-message {
+			background-color: #000;
+			color: white;
+			border: 1px inset black;
+		}
+
+		.chat-form {
+			display: flex;
+			margin-top: auto;
+			margin-bottom: 0;
+			padding: 10px;
+		}
+
+		.chat-form input[type="text"] {
+			font-family: papyrus;
+			flex: 1;
+			border: none;
+			border-radius: 20px;
+			padding: 10px;
+			margin-right: 10px;
+			font-size: 12px;
+			background: rgba(0,0,0,0.5);
+			border: 1px solid white;
+			color: white;
+		}
+		
+		.chat-form input[type="text"]:focus {
+			border: 1px solid hsl(317, 100%, 54%);
+		}
+		
+		.chat-form button[type="submit"] {
+			border: 1px solid hsl(317, 100%, 54%);;
+			border-radius: 50%;
+			background: url("{{ url_for('serve_image', filename='send.png') }}");
+			background-size: cover;
+			padding: 10px;
+			font-size: 12px;
+			cursor: pointer;
+			width: 40px;
+			height: 40px;
+		}
+		
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+	<div class="chat-container">
+		<div class="chatlogs">
+			<div class="chat bot">
+				<div class="bot-photo"></div>
+				<p class="chat-message">Hi! How can I help you today?</p>
+			</div>
+		</div>
+
+		<div class="chat-form">
+			<input type="text" id="user-input" placeholder="Type your message here..." autofocus>
+			<button type="submit" id="submit-button"></button>
+		</div>
+	</div>
+	<button class="chat-button" id="toggle-button"></button>
+	<script>
+		$(".chat-container").toggle();
+		$(document).ready(function(){
+			$("#submit-button").on('click', function(){
+				var userInput = $("#user-input").val();
+				$('.chatlogs').append('<div class="chat user"><div class="user-photo"></div><p class="chat-message">' + userInput + '</p></div>');
+				$.ajax({
+					type: "POST",
+					url: "/chat",
+					data: { text: userInput },
+					success: function(response){
+						var botHtml = '<div class="chat bot"><div class="bot-photo"></div><p class="chat-message">' + response.text + '</p></div>';
+						$('.chatlogs').append(botHtml);
+						$("#user-input").val("");
+					},
+					error: function(){
+						alert("Error communicating with the server.");
+					}
+				});
+			});
+
+			$("#user-input").keypress(function(event){
+				if (event.which == 13){
+					$("#submit-button").click();
+				}
+			});
+
+			$("#toggle-button").on('click', function(){
+				$(".chat-container").toggle();
+			});
+
+		});
+	</script>
+</body>
+</html>
